@@ -12,6 +12,11 @@ public class Farmer extends Person {     //inherence
         return instance;
     }
 
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
     public void diference(Egg Color) {
         HenHouse hen = new HenHouse("My HenHouse", 40); // instance of class
         Collecteggs(hen.makeHens(Color), Color);

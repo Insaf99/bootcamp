@@ -10,14 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class MydemoApplication {
-	private static final Logger logger = LogManager.getLogger(Main.class);
+	//private static final Logger logger = LogManager.getLogger(Main.class);
 	public static void main(String[] args) {
-		SpringApplication.run(MydemoApplication.class, args);
-		System.out.println("Welcome to my farm!");
+		SpringApplication.run(MydemoApplication.class, args);}
+		/*System.out.println("Welcome to my farm!");
 		Farmer farmer = Farmer.getInstance("Lio messi");
 		farmer.diference(Egg.O);
 		farmer.diference(Egg.D);
-		logger.error("Welcome to log4j dear user!");
-	}
+		logger.info("Welcome to log4j dear user!");
+		logger.warn("Warning from log4j");
+	}*/
 
 }
