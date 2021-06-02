@@ -3,6 +3,8 @@ package com.BuyEggsOnline.Mydemo.Model;
 import com.BuyEggsOnline.Mydemo.entities.Egg;
 import com.BuyEggsOnline.Mydemo.entities.Farm;
 
+import java.util.Objects;
+
 public class Product {
 	private int id;
 	private String farm;
@@ -52,4 +54,17 @@ public class Product {
 	public int getStock() {return stock;}
 
 	public void setStock(int stock) {this.stock = stock; }
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Product product = (Product) o;
+		return id == product.id;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }

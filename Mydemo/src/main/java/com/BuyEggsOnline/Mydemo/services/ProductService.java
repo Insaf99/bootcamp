@@ -2,64 +2,65 @@ package com.BuyEggsOnline.Mydemo.services;
 
 import com.BuyEggsOnline.Mydemo.Model.Product;
 import com.BuyEggsOnline.Mydemo.entities.Egg;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Predicate;
 
-@Service 
+@Service
 public class ProductService {
 
+	List<Product> repository = new ArrayList<>();
+
+	public ProductService() {
+		this.repository.add(new Product(
+				1,
+				"Franco Farm",
+				"Red Egg",
+				Egg.D,
+				10,
+				56));
+		this.repository.add(new Product(
+				2,
+				"Franco Farm",
+				"White Egg",
+				Egg.O,
+				15,
+				24));
+		this.repository.add(new Product(
+				3,
+				"Messi Farm",
+				"Red Egg",
+				Egg.D,
+				17,
+				56));
+		this.repository.add(new Product(
+				4,
+				"Messi Farm",
+				"White Egg",
+				Egg.O,
+				20,
+				24));
+	}
+
 	public List<Product> getAllProducts(){
-		return List.of(
-				new Product(
-						1,
-						"Franco Farm",
-						"Red Egg",
-						Egg.D,
-						10,
-						56),
-				new Product(
-						2,
-						"Franco Farm",
-						"White Egg",
-						Egg.O,
-						15,
-						24),
-				new Product(
-						3,
-						"Messi Farm",
-						"Red Egg",
-						Egg.D,
-						17,
-						56),
-				new Product(
-						4,
-						"Messi Farm",
-						"White Egg",
-						Egg.O,
-						20,
-						24)
-		);
+		return repository;
 	}
 
-	public Product InsertProduct(@RequestBody Product product){
-		Product product1 = new Product(product);
-		return product1;
+	public Product InsertProduct(Product product){
+//		Product product1 = new Product(product);
+		if (repository.contains(product)) return null;
+		repository.add(product);
+		return product;
 	}
 
-	public Optional<Product> findById(int id){
-		/*List<Product> messi = getAllProducts();
-		messi.forEach(product -> {
-			if (product.getId().equals(id))
-				return product;
-		});*/
-		return null;
-		//return getAllProducts().stream().filter(product -> product.getId().equals(id)).findFirst();
+	public Product findById(int id){
+		Product result = null;
+		for(Product product: repository) {
+			if (product.getId()==id) result = product;
+		}
+		return result;
 	}
 
 	public Product filterProducts(Predicate<Product> strategy) {
@@ -67,6 +68,15 @@ public class ProductService {
 	}
 
 	public Product modify(Product product){
+		int index = repository.indexOf(product);
+		if(index == -1) {
+			return product;
+		}
+		repository.set(index, new Product(product.getId(), product.getFarm(), product.getName(), product.getType(), product.getPrice(), product.getStock()));
+		return product;
+	}
 
+	public void delete(int id){
+		repository.remove(findById(id));
 	}
 }

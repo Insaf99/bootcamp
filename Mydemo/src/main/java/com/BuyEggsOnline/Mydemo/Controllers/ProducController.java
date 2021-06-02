@@ -2,12 +2,8 @@ package com.BuyEggsOnline.Mydemo.Controllers;
 import com.BuyEggsOnline.Mydemo.Model.Product;
 import com.BuyEggsOnline.Mydemo.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 //mi productcontroller deberia tener get,post,put,delete
 @RestController
@@ -19,15 +15,15 @@ public class ProducController {
     @GetMapping
     public List<Product> getProducts(){return productService.getAllProducts();}
 
-    @GetMapping("/id")
-    public Optional<Product> productByid(@RequestParam("id") int ID){
-        return productService.findById(ID);
+    @GetMapping("/id={id}")
+    public Product productByid(@PathVariable int id){
+        return productService.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public Product InsertProduct(@RequestBody Product product){
-            productService.InsertProduct(product);
-            return product;
+        productService.InsertProduct(product);
+        return product;
     }
 
     @PutMapping
@@ -36,8 +32,8 @@ public class ProducController {
     }
 
     @DeleteMapping(value ="/{id}")
-    public List<Product> deleteProducts(@PathVariable("id") int id){
-        return new List<Product>(HttpStatus.OK) {
-        }}
+    public void deleteProducts(@PathVariable("id") int id) {
+        productService.delete(id);
+    }
 
 }
